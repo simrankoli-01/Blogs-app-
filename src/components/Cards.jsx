@@ -2,7 +2,7 @@ import React from "react";
 import appWriteService from "../appwrite/conf";
 import { Link } from "react-router-dom";
 
-const Cards = ({ $id, title, featureImage, featureImg }) => {
+const Cards = ({ $id, title, featureImage, featureImg , username}) => {
   // console.log('featureImg value:', featureImg)
   //  console.log('preview url:', appWriteService.getFileView(featureImg))
   return (
@@ -15,7 +15,16 @@ const Cards = ({ $id, title, featureImage, featureImg }) => {
             className="rounded-xl"
           />
         </div>
-        <h2 className="md:text-xl text-sm font-bold">{title}</h2>
+        <div className="flex items-center mt-3">
+          <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center font-semibold">
+            {username?.charAt(0).toUpperCase()}
+          </div>
+
+          <div className="ml-2">
+            <p className="text-sm font-medium">{username}</p>
+          </div>
+        </div>
+        <h2 className="md:text-xl text-sm">{title}</h2>
       </div>
     </Link>
   );

@@ -78,7 +78,7 @@ const Login = () => {
             {error.password && (
               <p className="text-red-500 text-sm mt-1">{error.password}</p>
             )}
-           <Button className="w-full text-white" type="submit">Login</Button>
+           <Button className="w-full text-white hover:bg-violet-800" type="submit">Login</Button>
           </div>
         </form>
       </div>

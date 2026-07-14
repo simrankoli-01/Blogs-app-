@@ -29,6 +29,8 @@ const Post = () => {
     appwiteService.deletePost(post.$id);
     navigate("/");
   };
+//   console.log("userData:", userData);
+// console.log("post.userId:", post?.userId);
 
   return post ? (
     <div className="py-8">
@@ -52,7 +54,7 @@ const Post = () => {
                   Edit
                 </Button>
               </Link>
-              <Button bgcolor="bg-red-500 hover:bg-red-700" onClick={deletePost}>
+              <Button bgcolor="bg-red-600 hover:bg-red-700" onClick={deletePost}>
                 Delete
               </Button>
             </div>

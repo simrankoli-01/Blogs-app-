@@ -13,5 +13,7 @@ import PostForm from './postForm/PostForm'
 import Cards from './Cards'
 import AuthLayout from './AuthLayout'
 import Home from './Pages/Home'
+import Profile from "./Pages/Profile";
+import EditProfile from "./Pages/EditProfile";
 
-export {Header, Footer, Container, Logo , LogoutBtn, Select, Login, Signup, Button, Input, RTE, PostForm, Cards, AuthLayout, Home}
+export { Header, Footer, Container, Logo, LogoutBtn, Select, Login, Signup, Button, Input, RTE, PostForm, Cards, AuthLayout, Home, Profile, EditProfile }

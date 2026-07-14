@@ -49,6 +49,7 @@ const PostForm = ({ post }) => {
           status: data.status,
           featuredImage: file.$id,
           userId: userData.$id,
+          username: userData.name
         });
 
         if (dbpost) {

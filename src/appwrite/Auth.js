@@ -1,5 +1,6 @@
 import { Account, Client, ID } from 'appwrite'
 import config from '../config/config'
+import profileService from './profile'
 
 export class Authservice {
     client = new Client()
@@ -14,12 +15,25 @@ export class Authservice {
 
     async createAccount({email, password, name}) {
         try {
-           const userAccount =  await this.account.create(ID.unique(), email, password, name)
+           const userAccount =  await this.account.create(
+            ID.unique(), 
+            email, 
+            password, 
+            name
+        )
            console.log("account created succesfully", userAccount)
 
            if (userAccount) {
+             await this.login({email, password})
+             await profileService.createUserProfile(
+            {
+                $id: userAccount.$id,
+                name: userAccount.name,
+                email: userAccount.email
+            }
+           ) 
+           return this.account.get();
             console.log("attempting login with", email)
-             return this.login({email, password})
            } else {
             return userAccount
            }

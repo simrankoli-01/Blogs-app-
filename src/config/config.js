@@ -14,7 +14,8 @@ const config = {
   projectId: getEnv("VITE_APPWRITE_PROJECT_ID"),
   appwriteDatabaseId: getEnv("VITE_APPWRITE_DATABASE_ID"),
   appwriteCollectionId: getEnv("VITE_APPWRITE_COLLECTION_ID"),
-  appwriteBucketId: getEnv("VITE_APPWRITE_BUCKET_ID")
+  appwriteBucketId: getEnv("VITE_APPWRITE_BUCKET_ID"),
+  appwriteProfileId: getEnv("VITE_APPWRITE_PROFILECOLLECTION_ID")
 }
 
 export default config
