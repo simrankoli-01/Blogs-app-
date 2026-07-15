@@ -5,7 +5,7 @@ import heroImage from "../../assets/3d_model.png";
 const Herotext = () => {
   return (
     <div className="flex flex-col w-full min-h-screen items-center justify-center text-white px-4 sm:px-8">
-      <div className="flex flex-col-reverse md:flex-row items-center justify-between w-full">
+      <div className="flex flex-col-reverse md:flex-row items-center justify-between w-full py-5">
         <div className="flex flex-col items-center md:items-start text-center md:text-left max-w-xl">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold leading-tight">
             Every Story Deserves to be Shared

@@ -11,6 +11,7 @@ const Post = () => {
   const navigate = useNavigate();
 
   const userData = useSelector((state) => state.auth.userData);
+  // console.log(slug)
 
   const isAuthor = post && userData ? post.userId === userData.$id : false;
 
@@ -33,20 +34,29 @@ const Post = () => {
 // console.log("post.userId:", post?.userId);
 
   return post ? (
-    <div className="py-8">
+    <div className="md:py-6 py-1">
       <Container>
-        <div className="w-full flex relative justify-center bg-white/20 rounded-xl px-2 py-5 z-0">
-        <div className="flex md:flex-row flex-col justify-center">
+        <div className="flex relative bg-white/20 md:rounded-xl rounded-none md:px-6 px-0 py-5 z-0">
+           {/* <div className="mx-auto">
               <img
             src={appwiteService.getFileView(post.featureImg)}
             alt={post.title}
-            className="w-full max-h-75 sm:max-h-100 lg:max-h-125 object-contain rounded-xl"
+            className="md:w-125 w-55 max-h-50  md:max-h-125 object-fit rounded-xl"
           />
-          <div className="text-center py-2 px-4">
-            <h1 className="md:text-2xl text-xl font-bold mb-3">{post.title}</h1>
-            <div className='md:text-lg  text-sm browser-css'>{parse(post.content)}</div>
+          </div> */}
+          {/* <div className="flex items-center mt-3">
+          <div className="md:w-8 md:h-8 w-5 h-5 object-cover rounded-full bg-white/20 flex items-center justify-center font-semibold">
+            {username?.charAt(0).toUpperCase()}
           </div>
-        </div>
+
+          <div className="ml-2">
+            <p className="text-sm font-medium">{username}</p>
+          </div>
+        </div> */}
+         <div className="py-1 px-10 text-center w-full overflow-hidden">
+      <div className="md:text-lg text-sm">{parse(post.content)}</div>
+    </div>
+        
           {isAuthor && (
             <div className="absolute md:bottom-6 bottom-1.5 right-6 z-10">
               <Link to={`/edit-post/${post.$id}`}>

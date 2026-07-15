@@ -16,7 +16,7 @@ const Cards = ({ $id, title, featureImage, featureImg , username}) => {
           />
         </div>
         <div className="flex items-center mt-3">
-          <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center font-semibold">
+          <div className="md:w-8 md:h-8 w-5 h-5 object-cover rounded-full bg-white/20 flex items-center justify-center font-semibold">
             {username?.charAt(0).toUpperCase()}
           </div>
 
@@ -24,7 +24,7 @@ const Cards = ({ $id, title, featureImage, featureImg , username}) => {
             <p className="text-sm font-medium">{username}</p>
           </div>
         </div>
-        <h2 className="md:text-xl text-sm">{title}</h2>
+        <h2 className="text-sm text-gray-900 font-mono">{title}</h2>
       </div>
     </Link>
   );

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { login as loginaction} from "../features/authSlice";
+import { login as loginaction } from "../features/authSlice";
 import { Button, Input, Logo } from "./index";
 import authservice from "../appwrite/Auth";
 import { useDispatch } from "react-redux";
@@ -9,27 +9,32 @@ import { useForm } from "react-hook-form";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [error, setError] = useState("");
 
   const onSubmit = async (data) => {
+    // console.log("onSubmit fired with: ", data)
     setError("");
     try {
       const session = await authservice.login(data);
       if (session) {
         const userData = await authservice.isLogedin();
-        if (userData) dispatch(loginaction( userData ));
+        if (userData) dispatch(loginaction(userData));
         navigate("/");
       }
     } catch (error) {
       setError(error.message);
     }
   };
+
+  // console.log("RHF error: ", errors)
   return (
     <div className="flex items-center justify-center w-full py-10">
-      <div
-        className={`mx-auto w-full max-w-lg  rounded-2xl p-5  bg-white/20`}
-      >
+      <div className={`mx-auto w-full max-w-lg  rounded-2xl p-5  bg-white/20`}>
         <div className="flex justify-center">
           <span className="inline-block w-full max-w-[5vw]">
             <Logo width="100%" />
@@ -71,14 +76,20 @@ const Login = () => {
                 required: true,
                 minLength: {
                   value: 9,
-                  message: "Password must be atleast 9 characters"
-                }
+                  message: "Password must be atleast 9 characters",
+                },
               })}
             />
-            {error.password && (
-              <p className="text-red-500 text-sm mt-1">{error.password}</p>
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
             )}
-           <Button className="w-full text-white hover:bg-violet-800" type="submit">Login</Button>
+            <Button
+              onClick={(e) => console.log("button clicked")}
+              className="w-full text-white hover:bg-violet-800"
+              type="submit"
+            >
+              Login
+            </Button>
           </div>
         </form>
       </div>
