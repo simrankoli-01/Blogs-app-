@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react'
-import appwiteService from '../../appwrite/conf'
+import appwriteService from '../../appwrite/conf'
 import {Cards, Container} from '../index'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Herotext from '../headings/Herotext'
 import Video from '../Video'
+import profileService from '../../appwrite/profile'
 
 const Home = () => {
     const [posts, setPosts] = useState([])
@@ -13,11 +14,25 @@ const Home = () => {
 
     useEffect(() => {
      if(authStatus){
-        appwiteService.getPosts().then((post) => {
-        if(post) {
-            setPosts(post.documents)
-        }
-     })
+       const loadPosts = async () => {
+           const response = await appwriteService.getPosts();
+       
+           const postsWithProfiles = await Promise.all(
+             response.documents.map(async (post) => {
+               const profile = await profileService.getUserProfile(post.userId);
+       
+               return {
+                 ...post,
+                 username: profile.name,
+                 profileImg: profile.profileImg,
+               };
+             })
+           );
+       
+           setPosts(postsWithProfiles);
+         };
+       
+         loadPosts();
      }
     }, [authStatus])
 
@@ -52,7 +67,6 @@ const Home = () => {
     }
 
     const hasUserPost = posts.some((post) => post.userId === userData?.$id)
-    // console.log(hasUserPost)
 
     return (
          <div className='w-full py-1'>

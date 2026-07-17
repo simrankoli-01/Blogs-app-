@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import profileService from "../../appwrite/profile";
 import { Link } from "react-router-dom";
+import service from "../../appwrite/conf";
 
 const Profile = () => {
   const userData = useSelector((state) => state.auth.userData);
@@ -28,7 +29,6 @@ const Profile = () => {
 
         {/* Profile Section */}
         <div className="flex flex-col items-center px-6 pb-8 -mt-10 md:-mt-20">
-          {/* Avatar */}
           <img
             src={
               profile.profileImg

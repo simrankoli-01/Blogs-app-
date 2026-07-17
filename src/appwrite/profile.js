@@ -13,7 +13,7 @@ class ProfileService {
     this.databases = new Databases(this.client);
   }
 
-  async createUserProfile({ $id, name, email, profileImg = "", Bio = ""}) {
+  async createUserProfile({ $id, name, email, profileImg = "", bio = ""}) {
     return await this.databases.createDocument(
       config.appwriteDatabaseId,
       config.appwriteProfileId,
@@ -22,7 +22,7 @@ class ProfileService {
         name,
         email,
         profileImg,
-        Bio
+        bio
       }
     )
   }

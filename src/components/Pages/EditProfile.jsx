@@ -1,101 +1,147 @@
-import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import profileService from '../../appwrite/profile'
-import { useForm } from 'react-hook-form'
-import { Button, Input, Logo } from '../index';
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import profileService from "../../appwrite/profile";
+import { useForm } from "react-hook-form";
+import { Button, Input, Logo } from "../index";
+import { Link, useNavigate } from "react-router-dom";
+import service from "../../appwrite/conf";
 
 const EditProfile = () => {
-    const [profile, setProfile] = useState(null)
-    const userData = useSelector((state) => state.auth.userData)
-    const { register, handleSubmit, reset, watch } = useForm()
+  const [profile, setProfile] = useState(null);
+  const [preview, setPreview] = useState("");
+  const userData = useSelector((state) => state.auth.userData);
+  const { register, handleSubmit, reset, watch } = useForm();
+  const navigate = useNavigate();
+  const image = watch("image");
+  const bio = watch("bio", profile?.bio || "");
 
-    useEffect(() => {
-      if(userData){
-        profileService.getUserProfile(userData.$id)
-        .then((data) => {
-            setProfile(data)
+  console.log("loggedin user:", userData)
+  // console.log(bio.length)
 
-            reset({
-                name: data.name,
-                Bio: data.Bio
-            })
-        })
+  useEffect(() => {
+    if (!image?.[0]) {
+      setPreview("");
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(image[0]);
+    setPreview(objectUrl);
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [image]);
+
+  // console.log(preview)
+
+  useEffect(() => {
+    if (userData) {
+      profileService.getUserProfile(userData.$id).then((data) => {
+        setProfile(data);
+
+        reset({
+          name: data.name,
+          bio: data.bio,
+        });
+      });
+    }
+  }, [userData, reset]);
+  // console.log(profile)
+
+  const submit = async (data) => {
+    
+    let imageId = profile.profileImg;
+
+    if (data.image?.[0]) {
+      const file = await service.uploadFile(data.image[0]);
+      if (file) {
+        if (profile.profileImg) {
+          await service.deleteFile(profile.profileImg);
+        }
+        imageId = file.$id;
       }
-    }, [userData. reset]) 
-    // console.log(profile)
+    }
+
+    const updated = await profileService.updateProfile(userData.$id, {
+      name: data.name,
+      bio: data.bio,
+      profileImg: imageId,
+    })
+    navigate("/profile");
+     console.log("Updated profile:", updated);
+  };
 
   return (
-    <div className="flex items-center justify-center w-full md:py-10 py-0">
-          <div className={`mx-auto w-full max-w-lg  md:rounded-2xl rounded-none p-5  bg-white/20`}>
-            <div className="flex justify-center">
-              <span className="inline-block w-full max-w-[5vw]">
-                <Logo />
-              </span>
-            </div>
-            {/* <h2 className="text-center text-2xl font-bold leading-tight">
-              Sign in to your acount
-            </h2> */}
-            {/* <p className="mt-2 text-center text-base text-black/60">
-              Don&apos;t have any account?&nbsp;
-              <Link
-                to="/signup"
-                className="font-medium text-primary transition-all duration-200 hover:underline"
-              >
-                Sign Up
-              </Link>
-            </p> */}
-            {/* {error && <p className="text-red-500 mt-8 text-center"></p>} */}
-            <form  className="mt-8">
-              <div className="space-y-2">
-                <Input
-                  label="Name: "
-                  placeholder="Enter your name"
-                  type="text"
-                  {...register("Name", {
-                    required: true,
-                    validate: {
-                      matchPattern: (value) =>
-                        /^([\w\.\-_]+)?\w+@[\w-_]+(\.\w+){1,}$/.test(value) ||
-                        "Name should be unique",
-                    },
-                  })}
-                />
-                <Input
-                  label="Bio: "
-                  placeholder="Bio"
-                  type="text"
-                  {...register("Bio", {
-                    required: true,
-                    minLength: {
-                      value: 300,
-                      message: "characters should be 300",
-                    },
-                  })}
-                />
-                <Input
-                  label="email: "
-                  placeholder="email"
-                  type="email"
-                  {...register("email", {
-                    required: true
-                  })}
-                />
-                {/* {errors.password && (
-                  <p className="text-red-500 text-sm mt-1"></p>
-                )} */}
-                <Button
-                  onClick={(e) => console.log("button clicked")}
-                  className="w-full text-white bg-pink-800"
-                  type="submit"
-                >
-                  Save
-                </Button>
-              </div>
-            </form>
-          </div>
+    <div className="w-full md:py-7 py-0">
+      <form
+        onSubmit={handleSubmit(submit)}
+        className="max-w-3xl bg-white/20 mx-auto text-white p-6 md:rounded-2xl rounded-none md:py-4 py-5 md:px-20 px-3"
+      >
+        <div className="flex flex-col justify-center items-center gap-3 text-center">
+          <img
+            src={
+              preview
+                ? preview
+                : profile?.profileImg
+                ? service.getFileView(profile.profileImg)
+                : `https://ui-avatars.com/api/?name=${profile?.name}&background=random`
+            }
+            alt=""
+            className="md:w-36 w-20 md:h-36 h-20 rounded-full border-2 border-white/50 object-cover"
+          />
+          <input
+            id="profileImage"
+            type="file"
+            accept="image/png, image/jpg, image/jpeg,*"
+            className="hidden"
+            {...register("image")}
+          />
+          <label
+            htmlFor="profileImage"
+            className="cursor-pointer w-30 bg-blue-600 text-xs p-2 font-semibold text-white rounded-xl hover:bg-blue-800"
+          >
+            Change photo
+          </label>
         </div>
-  )
-}
 
-export default EditProfile
+        <div className="mt-2">
+          <Input
+            label="Name"
+            placeholder="Name"
+            className="mb-3 text-white"
+            {...register("name")}
+          />
+
+          <div className="relative mb-3">
+            <label className="block mb-2 font-medium">Bio</label>
+
+            <textarea
+              rows={5}
+              maxLength={150}
+              className="w-full rounded-xl md:text-[14px] text-xs bg-white/10 border border-white/30 p-3 text-white placeholder:text-gray-300 outline-none focus:border-blue-500 resize-none"
+              {...register("bio")}
+            />
+            <span className="absolute bottom-2 right-3 text-xs text-gray-400">
+              {bio.length}/150
+            </span>
+          </div>
+
+          <Input
+            label="Email"
+            value={profile?.email || ""}
+            type="email"
+            readOnly
+            className="text-white mb-3 cursor-not-allowed"
+          />
+
+          <Button
+            type="submit"
+            className="w-full mt-2 hover:bg-violet-800 cursor-pointer"
+          >
+            {" "}
+            Save changes
+          </Button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default EditProfile;

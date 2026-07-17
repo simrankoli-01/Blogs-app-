@@ -1,20 +1,34 @@
 import React, { useState, useEffect } from "react";
 import appwriteService from "../../appwrite/conf";
 import { Cards, Container } from "../index";
+import profileService from "../../appwrite/profile";
 
 const AllPost = () => {
   const [posts, setPosts] = useState([]);
 
-  useEffect(() => {
-    appwriteService.getPosts([]).then((posts) => {
-    if(posts){
-        setPosts(posts.documents)
-        console.log(posts)
-    }
-  })
-  }, []);
+useEffect(() => {
+  const loadPosts = async () => {
+    const response = await appwriteService.getPosts();
 
-  
+    const postsWithProfiles = await Promise.all(
+      response.documents.map(async (post) => {
+        const profile = await profileService.getUserProfile(post.userId);
+
+        return {
+          ...post,
+          username: profile.name,
+          profileImg: profile.profileImg,
+        };
+      })
+    );
+
+    setPosts(postsWithProfiles);
+  };
+
+  loadPosts();
+}, []);
+
+ console.log(posts)
 
   return (
    <div className="flex flex-wrap">
