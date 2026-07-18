@@ -22,15 +22,15 @@ const Cards = ({ $id, title, featureImg, profileImg, username }) => {
                   ? appWriteService.getFileView(profileImg)
                   : `https://ui-avatars.com/api/?name=${username}`
               }
-              className="md:w-8 md:h-8 w-5 h-5 object-cover rounded-full bg-white/20 "
+              className="w-10 h-10 object-cover rounded-full bg-white/20 "
             />
 
             <div className="ml-2">
-              <p className="text-sm text-white font-medium">{username}</p>
+              <p className="text-xl text-white font-medium">{username}</p>
             </div>
           </div>
         </Link>
-        <h2 className="text-sm text-blue-200 font-mono">{title}</h2>
+        <h2 className="text-sm mt-1 text-blue-200 font-mono">{title}</h2>
       </div>
     
   );

@@ -36,35 +36,26 @@ const Post = () => {
   return post ? (
     <div className="md:py-6 py-1">
       <Container>
-        <div className="flex relative bg-white/20 md:rounded-xl rounded-none md:px-6 px-0 py-5 z-0">
-           {/* <div className="mx-auto">
+        <div className="flex flex-col mx-auto max-w-3xl relative bg-white/20 md:rounded-xl rounded-none md:px-6 px-2 py-5 z-0">
+           <div className="mx-auto">
               <img
             src={appwiteService.getFileView(post.featureImg)}
             alt={post.title}
-            className="md:w-125 w-55 max-h-50  md:max-h-125 object-fit rounded-xl"
+            className=" w-100 max-h-50  object-cover rounded-xl"
           />
-          </div> */}
-          {/* <div className="flex items-center mt-3">
-          <div className="md:w-8 md:h-8 w-5 h-5 object-cover rounded-full bg-white/20 flex items-center justify-center font-semibold">
-            {username?.charAt(0).toUpperCase()}
           </div>
-
-          <div className="ml-2">
-            <p className="text-sm font-medium">{username}</p>
-          </div>
-        </div> */}
-         <div className="py-1 px-10 text-center w-full overflow-hidden">
-      <div className="md:text-lg text-sm">{parse(post.content)}</div>
+         <div className="w-full mt-2">
+      <div className="text-sm">{parse(post.content)}</div>
     </div>
         
           {isAuthor && (
-            <div className="absolute md:bottom-6 bottom-1.5 right-6 z-10">
+            <div className="absolute md:top-5 top-6 md:right-6 right-4 z-10 text-white">
               <Link to={`/edit-post/${post.$id}`}>
-                <Button bgcolor="bg-green-500 hover:bg-green-700" className="md:mr-3 mr-1">
+                <Button bgcolor="cursor-pointer bg-green-500 hover:bg-green-700" className="md:mr-3 mr-1">
                   Edit
                 </Button>
               </Link>
-              <Button bgcolor="bg-red-600 hover:bg-red-700" onClick={deletePost}>
+              <Button bgcolor="cursor-pointer bg-red-600 hover:bg-red-700" onClick={deletePost}>
                 Delete
               </Button>
             </div>

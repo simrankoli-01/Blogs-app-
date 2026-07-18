@@ -69,7 +69,7 @@ const Home = () => {
     const hasUserPost = posts.some((post) => post.userId === userData?.$id)
 
     return (
-         <div className='w-full py-1'>
+         <div className='w-full py-2'>
             <Container>
                 {!hasUserPost && (
                     <div className='w-full mb-2 p-4 rounded-xl bg-white/10 text-center'>

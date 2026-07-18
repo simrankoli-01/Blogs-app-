@@ -9,6 +9,8 @@ import AddPost from './components/Pages/AddPost.jsx'
 import AllPost from './components/Pages/AllPost.jsx'
 import EditPost from './components/Pages/EditPost.jsx'
 import Post from './components/Pages/Post.jsx'
+import EmailVerify from "./components/Pages/EmailVerify.jsx";
+import CheckEmail from "./components/Pages/CheckEmail.jsx";
 
 const router = createBrowserRouter([
   {
@@ -79,6 +81,22 @@ const router = createBrowserRouter([
         element: (
           <AuthLayout authentication>
             <EditProfile />
+          </AuthLayout>
+        )
+      },
+      {
+        path: '/verify-email',
+        element: (
+          <AuthLayout authentication={false}>
+            <EmailVerify />
+          </AuthLayout>
+        )
+      },
+      {
+        path: '/check-email',
+        element: (
+          <AuthLayout authentication={false}>
+            <CheckEmail />
           </AuthLayout>
         )
       }

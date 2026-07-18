@@ -9,18 +9,16 @@ import { useForm } from "react-hook-form";
 const Signup = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [error, setError] = useState(""
-  );
+  const [error, setError] = useState("");
   const { register, handleSubmit } = useForm();
 
   const signup = async (data) => {
     setError("");
     try {
-      const session = await authservice.createAccount(data);
-      if (session) {
-        const userData = await authservice.isLogedin();
-        if (userData) dispatch(login(userData));
-        navigate("/");
+      const user = await authservice.createAccount(data);
+
+      if (user) {
+        navigate("/check-email");
       }
     } catch (error) {
       setError(error.message);
@@ -29,9 +27,7 @@ const Signup = () => {
 
   return (
     <div className="flex items-center justify-center py-10">
-      <div
-        className={`mx-auto w-full max-w-lg bg-white/10 rounded-xl p-5 `}
-      >
+      <div className={`mx-auto w-full max-w-lg bg-white/10 rounded-xl p-5 `}>
         <div className="mb-2 flex justify-center">
           <span className="inline-block w-full max-w-[100]">
             <Logo width="100%" />

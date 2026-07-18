@@ -33,7 +33,7 @@ useEffect(() => {
   return (
    <div className="flex flex-wrap">
   {posts.map((post) => (
-    <div key={post.$id} className="p-4 md:w-1/4 w-full">
+    <div key={post.$id} className="p-2 md:w-1/4 w-full">
       <Cards {...post}/>
     </div>
   ))}

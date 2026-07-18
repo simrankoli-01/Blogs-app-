@@ -6,49 +6,77 @@ export class Authservice {
     client = new Client()
     account;
 
-    constructor(){
+    constructor() {
         this.client
-        .setEndpoint(config.appwriteUrl)
-        .setProject(config.appwriteProjectId);
+            .setEndpoint(config.appwriteUrl)
+            .setProject(config.appwriteProjectId);
         this.account = new Account(this.client)
     }
 
-    async createAccount({email, password, name}) {
+    async createAccount({ email, password, name }) {
         try {
-           const userAccount =  await this.account.create(
-            ID.unique(), 
-            email, 
-            password, 
-            name
-        )
-           console.log("account created succesfully", userAccount)
+            const userAccount = await this.account.create(
+                ID.unique(),
+                email,
+                password,
+                name
+            )
+            //    console.log("account created succesfully", userAccount)
 
-           if (userAccount) {
-             await this.login({email, password})
-             await profileService.createUserProfile(
-            {
-                $id: userAccount.$id,
-                name: userAccount.name,
-                email: userAccount.email
+            if (userAccount) {
+                await this.login({ email, password })
+                await profileService.createUserProfile(
+                    {
+                        $id: userAccount.$id,
+                        name: userAccount.name,
+                        email: userAccount.email
+                    }
+                )
+                await this.sendverificationEmail()
+                await this.logout()
+                return userAccount
             }
-           ) 
-           return this.account.get();
-            console.log("attempting login with", email)
-           } else {
             return userAccount
-           }
-
         } catch (error) {
-             console.log('create account error', error.message)
+            console.log('create account error', error.message)
         }
     }
 
-    async login({email, password}) {
+    async sendverificationEmail() {
         try {
-           return await this.account.createEmailPasswordSession(email, password)
+            return await this.account.createVerification(
+                `${config.appUrl}/verify-email`
+            )
         } catch (error) {
-             console.log('login error', error.message, 'code' , error.code)
-             throw error
+            console.log("email verification error: ", error.message)
+            throw error
+        }
+    }
+    async resendVerificationEmail() {
+        try {
+            return await this.account.createVerification(
+                `${config.appUrl}/verify-email`
+            )
+        } catch (error) {
+            throw error
+        }
+    }
+
+    async login({ email, password }) {
+        try {
+            return await this.account.createEmailPasswordSession(email, password)
+        } catch (error) {
+            console.log('login error', error.message, 'code', error.code)
+            throw error
+        }
+    }
+
+    async verifyEmail(userId, secret) {
+        try {
+            return await this.account.updateVerification(userId, secret);
+        } catch (error) {
+            console.log("Email verification failed:", error.message);
+            throw error;
         }
     }
 
