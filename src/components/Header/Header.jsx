@@ -102,8 +102,6 @@ const Header = () => {
           </nav>
         </Container>
       </header>
-
-
       <div
         onClick={() => setMenuOpen(false)}
         className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-opacity duration-300
@@ -113,8 +111,6 @@ const Header = () => {
             : "opacity-0 invisible"
         }`}
       />
-
-
       <div
         className={`fixed top-0 right-0 h-full w-72 bg-black/30 text-white z-50
         transform transition-transform duration-300

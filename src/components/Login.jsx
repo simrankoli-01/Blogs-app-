@@ -33,7 +33,7 @@ const Login = () => {
 
   // console.log("RHF error: ", errors)
   return (
-    <div className="flex items-center justify-center w-full py-10">
+    <div className="flex items-center justify-center w-full py-10 text-white">
       <div className={`mx-auto w-full max-w-lg  rounded-2xl p-5  bg-white/20`}>
         <div className="flex justify-center">
           <span className="inline-block w-full max-w-[5vw]">
@@ -47,7 +47,7 @@ const Login = () => {
           Don&apos;t have any account?&nbsp;
           <Link
             to="/signup"
-            className="font-medium text-primary transition-all duration-200 hover:underline"
+            className="font-medium text-blue-900 transition-all duration-200 hover:underline"
           >
             Sign Up
           </Link>

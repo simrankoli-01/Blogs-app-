@@ -11,32 +11,15 @@ const RTE = ({ name, control, label, defaultValue = "" }) => {
         </label>
       )}
       <Controller
-        name={"content"}
+        name={name}
         control={control}
         render={({ field: { onChange } }) => (
-          <div
-            className="w-full
-              [&_.tox-tinymce]:w-full!
-              [&_.tox-editor-header]:flex!
-              [&_.tox-editor-header]:flex-col!
-              [&_.tox-toolbar-overlord]:flex!
-              [&_.tox-toolbar-overlord]:flex-col!
-              [&_.tox-toolbar]:flex!
-              [&_.tox-toolbar]:flex-wrap!
-              [&_.tox-toolbar]:items-center!
-              [&_.tox-toolbar:primary]:flex!
-              [&_.tox-toolbar__primary]:flex-wrap!
-              [&_.tox-toolbar__group]:flex!
-              [&_.tox-toolbar__group]:flex-row!
-              [&_.tox-toolbar__group]:items-center!
-              [&_.tox-menubar]:flex!
-              [&_.tox-menubar]:flex-wrap!"
-          >
+          <div className="w-full overflow-hidden">
             <Editor
               apiKey={import.meta.env.VITE_TINYMCE_API_KEY}
               initialValue={defaultValue}
               init={{
-                height: 500,
+                height: window.innerWidth < 768 ? 300 : 500,
                 menubar: true,
                 toolbar_mode: "wrap",
                 statusbar: false,
@@ -69,7 +52,7 @@ const RTE = ({ name, control, label, defaultValue = "" }) => {
                 mobile: {
                   theme: "silver",
                   toolbar_mode: "wrap",
-                  menubar: true,
+                  menubar: false,
                   plugins: [
                     "advlist",
                     "autolink",
@@ -90,8 +73,7 @@ const RTE = ({ name, control, label, defaultValue = "" }) => {
                     "wordcount",
                   ],
                   toolbar:
-                    "undo redo | bold italic | bullist numlist | " +
-                    "alignleft aligncenter alignright | link image | removeformat",
+                    "undo redo | bold italic | bullist numlist | alignleft aligncenter alignright | link image | removeformat",
                 },
               }}
               onEditorChange={onChange}

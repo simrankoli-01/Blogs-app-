@@ -26,7 +26,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex items-center justify-center py-10">
+    <div className="flex items-center justify-center py-10 text-white">
       <div className={`mx-auto w-full max-w-lg bg-white/10 rounded-xl p-5 `}>
         <div className="mb-2 flex justify-center">
           <span className="inline-block w-full max-w-[100]">
