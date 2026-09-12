@@ -4,32 +4,53 @@ import heroImage from "../../assets/3d.png";
 
 const Herotext = () => {
   return (
-    <div className="flex flex-col w-full min-h-screen items-center justify-center text-white px-4 sm:px-8">
-      <div className="flex flex-col-reverse md:flex-row items-center justify-between w-full py-5">
-        <div className="flex flex-col items-center md:items-start text-center md:text-left max-w-xl">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold leading-tight">
-            Every Story Deserves to be Shared
+    <main className="min-h-[calc(100vh-80px)] bg-[#f5f2eb] text-[#171717]">
+      <div className="mx-auto grid min-h-[calc(100vh-80px)] max-w-7xl grid-cols-1 items-center gap-10 px-5 py-12 md:grid-cols-2 md:px-10 lg:px-16">
+        
+        <div className="order-2 md:order-1">
+          <p className="mb-6 text-[10px] uppercase tracking-[0.3em] text-black/50">
+            Welcome to Blog's
+          </p>
+
+          <h1 className="max-w-2xl font-serif text-6xl leading-[0.85] tracking-tight sm:text-7xl md:text-8xl lg:text-[9rem]">
+            Every story
+            <br />
+            <span className="italic">matters.</span>
           </h1>
-          <h3 className="mt-4 text-base sm:text-lg md:text-xl italic font-light font-sans text-gray-200">
-            Write, publish, and inspire readers around the world
-          </h3>
-          <Link
-            to="/signup"
-            className="mt-6 inline-block bg-violet-500 hover:bg-violet-600 transition-colors duration-200 px-6 py-3 rounded-full font-medium"
-          >
-            Get Started
-          </Link>
+
+          <p className="mt-8 max-w-md text-sm leading-6 text-black/60 md:text-base">
+            A quiet place for ideas, experiences and stories.
+            Write something meaningful and share it with the world.
+          </p>
+
+          <div className="mt-8 flex items-center gap-4">
+            <Link
+              to="/signup"
+              className="rounded-full bg-black px-7 py-3 text-[10px] uppercase tracking-[0.2em] text-white transition hover:bg-black/80"
+            >
+              Start writing
+            </Link>
+
+            <Link
+              to="/all-posts"
+              className="text-[10px] uppercase tracking-[0.2em] underline underline-offset-4"
+            >
+              Explore stories
+            </Link>
+          </div>
         </div>
 
-        <div className="shrink-0">
-          <img
-            className="w-full h-full object-cover"
-            src={heroImage}
-            alt="Person writing"
-          />
+        <div className="order-1 flex h-[45vh] items-center justify-center md:order-2 md:h-[75vh]">
+          <div className="h-full w-full max-w-xl overflow-hidden bg-[#ddd7cc]">
+            <img
+              src={heroImage}
+              alt="Person writing"
+              className="h-full w-full object-cover"
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 

@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import profileService from "../../appwrite/profile";
 import { useForm } from "react-hook-form";
-import { Button, Input, Logo } from "../index";
-import { Link, useNavigate } from "react-router-dom";
+import Button from "../Button";
+import Input from "../Input";
+import {  useNavigate } from "react-router-dom";
 import service from "../../appwrite/conf";
 
 const EditProfile = () => {
@@ -15,7 +16,7 @@ const EditProfile = () => {
   const image = watch("image");
   const bio = watch("bio", profile?.bio || "");
 
-  console.log("loggedin user:", userData)
+  // console.log("loggedin user:", userData)
   // console.log(bio.length)
 
   useEffect(() => {

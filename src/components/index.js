@@ -16,4 +16,42 @@ import Home from './Pages/Home'
 import Profile from "./Pages/Profile";
 import EditProfile from "./Pages/EditProfile";
 
-export { Header, Footer, Container, Logo, LogoutBtn, Select, Login, Signup, Button, Input, RTE, PostForm, Cards, AuthLayout, Home, Profile, EditProfile }
+export {
+  Header,
+  Footer,
+  Container,
+  Logo,
+  LogoutBtn,
+  Select,
+  Login,
+  Signup,
+  Button,
+  Input,
+  RTE,
+  PostForm,
+  Cards,
+  AuthLayout,
+  Home,
+  Profile,
+  EditProfile,
+};
+
+export default {
+  Header,
+  Footer,
+  Container,
+  Logo,
+  LogoutBtn,
+  Select,
+  Login,
+  Signup,
+  Button,
+  Input,
+  RTE,
+  PostForm,
+  Cards,
+  AuthLayout,
+  Home,
+  Profile,
+  EditProfile,
+};

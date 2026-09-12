@@ -1,96 +1,122 @@
-import React, {useEffect, useState} from 'react'
-import appwriteService from '../../appwrite/conf'
-import {Cards, Container} from '../index'
-import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import Herotext from '../headings/Herotext'
-import Video from '../Video'
-import profileService from '../../appwrite/profile'
+import React, { useEffect, useState } from "react";
+import appwriteService from "../../appwrite/conf";
+import Cards from "../Cards";
+import Container from "../container/Container";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import Herotext from "../headings/Herotext";
+import profileService from "../../appwrite/profile";
 
 const Home = () => {
-    const [posts, setPosts] = useState([])
-    const authStatus = useSelector(state => state.auth.status)
-    const userData = useSelector((state) => state.auth.userData)
+  const [posts, setPosts] = useState([]);
+  const authStatus = useSelector((state) => state.auth.status);
+  const userData = useSelector((state) => state.auth.userData);
 
-    useEffect(() => {
-     if(authStatus){
-       const loadPosts = async () => {
-           const response = await appwriteService.getPosts();
-       
-           const postsWithProfiles = await Promise.all(
-             response.documents.map(async (post) => {
-               const profile = await profileService.getUserProfile(post.userId);
-       
-               return {
-                 ...post,
-                 username: profile.name,
-                 profileImg: profile.profileImg,
-               };
-             })
-           );
-       
-           setPosts(postsWithProfiles);
-         };
-       
-         loadPosts();
-     }
-    }, [authStatus])
+  useEffect(() => {
+    if (!authStatus) return;
 
-    if(!authStatus){
-        return (
-             <div className='w-full'>
-                <Container>
-                    <Herotext />
-                </Container>
+    const loadPosts = async () => {
+      try {
+        const response = await appwriteService.getPosts();
+
+        const postsWithProfiles = await Promise.all(
+          response.documents.map(async (post) => {
+            try {
+              const profile = await profileService.getUserProfile(post.userId);
+
+              return {
+                ...post,
+                username: profile?.name,
+                profileImg: profile?.profileImg,
+              };
+            } catch {
+              return post;
+            }
+          })
+        );
+
+        setPosts(postsWithProfiles);
+      } catch (error) {
+        console.error("Failed to load posts:", error);
+      }
+    };
+
+    loadPosts();
+  }, [authStatus]);
+
+  if (!authStatus) {
+    return <Herotext />;
+  }
+
+  const hasUserPost = posts.some(
+    (post) => post.userId === userData?.$id
+  );
+
+  return (
+    <main className="min-h-screen bg-[#f5f2eb] text-[#171717]">
+      <Container>
+        {!hasUserPost && posts.length > 0 && (
+          <div className="border-b border-black/10 py-4">
+            <p className="text-center text-xs uppercase tracking-[0.15em] text-black/60">
+              You haven't shared anything yet.{" "}
+              <Link
+                to="/add-post"
+                className="font-semibold text-black underline underline-offset-4"
+              >
+                Create your first post
+              </Link>
+            </p>
+          </div>
+        )}
+
+        <section className="pb-20 pt-12 md:pt-20">
+          <div className="mb-14 flex flex-col justify-between gap-5 md:flex-row md:items-end">
+            <div>
+              <p className="mb-4 text-[10px] uppercase tracking-[0.3em] text-black/50">
+                The Journal
+              </p>
+
+              <h1 className="max-w-3xl font-serif text-5xl leading-[0.9] tracking-tight md:text-7xl lg:text-8xl">
+                Stories worth
+                <br />
+                <span className="italic">remembering.</span>
+              </h1>
             </div>
-        )
-    }
-    
-    if(posts.length === 0){
-        return (
-            <div className='w-full py-8 mt-4 text-center'>
-                <Container>
-                    <div className='flex flex-wrap'>
-                        <div className='p-2 w-full'>
-                            <h1 className='md:text-2xl text-xl text-white'>
-                             No posts yet.{' '}
-                             <Link 
-                             to='/add-post' className='text-blue-500'>
-                             Add your first post
-                             </Link>
-                            </h1>
-                        </div>
-                    </div>
-                </Container>
+
+            <p className="max-w-xs text-sm leading-6 text-black/60">
+              A collection of thoughts, ideas and stories shared by our
+              community of writers.
+            </p>
+          </div>
+
+          {posts.length === 0 ? (
+            <div className="border-y border-black/10 py-20 text-center">
+              <p className="font-serif text-3xl">
+                No stories yet.
+              </p>
+
+              <Link
+                to="/add-post"
+                className="mt-6 inline-block rounded-full bg-black px-6 py-3 text-xs uppercase tracking-widest text-white"
+              >
+                Write a story
+              </Link>
             </div>
-        )
-    }
+          ) : (
+            <div className="grid grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
+              {posts.map((post, index) => (
+                <Cards
+                  {...post}
+                  key={post.$id}
+                  index={index}
+                />
+              ))}
+            </div>
+          )}
+        </section>
+      </Container>
+    </main>
+  );
+};
 
-    const hasUserPost = posts.some((post) => post.userId === userData?.$id)
-
-    return (
-         <div className='w-full py-2'>
-            <Container>
-                {!hasUserPost && (
-                    <div className='w-full mb-2 p-4 rounded-xl bg-white/10 text-center'>
-                        <p className='text-white md:text-lg text-base'>
-                            You haven&apos;t shared anything yet.{' '}
-                            <Link to='/add-post' className='text-blue-500 font-medium hover:underline'>
-                                Create your first post
-                            </Link>
-                        </p>
-                    </div>
-                )}
-                <div className='flex flex-wrap'>
-                    {posts.map((post) => (
-                        <div className='md:w-1/4 w-full p-2' key={post.$id}>
-                            <Cards {...post}/>
-                        </div>
-                    ))}
-                </div>
-            </Container>
-        </div>
-    )
-}
-
-export default Home
+export default Home;

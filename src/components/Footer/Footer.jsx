@@ -1,113 +1,78 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import Logo from '../Logo'
+import React from "react";
+import { Link } from "react-router-dom";
+import Logo from "../Logo";
 
 const Footer = () => {
   return (
-    <section className="w-full overflow-hidden py-8 md:py-5 bg-white/10 text-white">
-      <div className="relative z-10 mx-auto max-w-7xl px-4">
-        <div className="flex flex-wrap -mx-2 md:-mx-6">
-          <div className="w-full p-2 md:w-1/2 lg:w-5/12">
-            <div className="flex md:px-2 px-0 h-full flex-col items-center md:items-start justify-between text-center md:text-left gap-3 md:gap-0">
-              <div className="mb-1 inline-flex items-center">
-                <Logo width="100px" />
-              </div>
-              <div>
-                <p className="text-sm text-gray-300">
-                  &copy; Copyright 2023. All Rights Reserved by DevUI.
-                </p>
-              </div>
+    <footer className="bg-[#171717] px-5 py-12 text-[#f5f2eb] md:px-10 md:py-16">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid gap-12 border-b border-white/10 pb-12 md:grid-cols-2 lg:grid-cols-4">
+          
+          <div className="lg:col-span-2">
+            <Logo />
+
+            <p className="mt-5 max-w-sm text-sm leading-6 text-white/50">
+              A place for thoughtful stories, honest ideas and
+              meaningful conversations.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="mb-5 text-[10px] uppercase tracking-[0.25em] text-white/40">
+              Explore
+            </h3>
+
+            <div className="flex flex-col gap-3">
+              <Link to="/" className="text-sm text-white/70 hover:text-white">
+                Home
+              </Link>
+
+              <Link
+                to="/all-posts"
+                className="text-sm text-white/70 hover:text-white"
+              >
+                Stories
+              </Link>
+
+              <Link
+                to="/add-post"
+                className="text-sm text-white/70 hover:text-white"
+              >
+                Write
+              </Link>
             </div>
           </div>
 
-          <div className="w-1/2 sm:w-1/2 md:p-6 p-2 lg:w-2/12 text-center md:text-left">
-            <div className="h-full">
-              <h3 className="tracking-px mb-2 text-xs font-semibold uppercase text-gray-200">
-                Company
-              </h3>
-              <ul className="space-y-1">
-                <li>
-                  <Link className="text-sm md:text-base font-medium text-gray-500 hover:text-blue-600" to="#">
-                    Features
-                  </Link>
-                </li>
-                <li>
-                  <Link className="text-sm md:text-base font-medium text-gray-500 hover:text-blue-600" to="#">
-                    Pricing
-                  </Link>
-                </li>
-                <li>
-                  <Link className="text-sm md:text-base font-medium text-gray-500 hover:text-blue-600" to="#">
-                    Affiliate Program
-                  </Link>
-                </li>
-                <li>
-                  <Link className="text-sm md:text-base font-medium text-gray-500 hover:text-blue-600" to="#">
-                    Press Kit
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </div>
+          <div>
+            <h3 className="mb-5 text-[10px] uppercase tracking-[0.25em] text-white/40">
+              Account
+            </h3>
 
-          <div className="w-1/2 sm:w-1/2 md:p-6 p-2 lg:w-2/12 text-center md:text-left">
-            <div className="h-full">
-              <h3 className="tracking-px mb-2 text-xs font-semibold uppercase text-gray-200">
-                Support
-              </h3>
-              <ul className="space-y-1">
-                <li>
-                  <Link className="text-sm md:text-base font-medium text-gray-500 hover:text-blue-600" to="#">
-                    Account
-                  </Link>
-                </li>
-                <li>
-                  <Link className="text-sm md:text-base font-medium text-gray-500 hover:text-blue-600" to="#">
-                    Help
-                  </Link>
-                </li>
-                <li>
-                  <Link className="text-sm md:text-base font-medium text-gray-500 hover:text-blue-600" to="#">
-                    Contact Us
-                  </Link>
-                </li>
-                <li>
-                  <Link className="text-sm md:text-base font-medium text-gray-500 hover:text-blue-600" to="#">
-                    Customer Support
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </div>
+            <div className="flex flex-col gap-3">
+              <Link
+                to="/login"
+                className="text-sm text-white/70 hover:text-white"
+              >
+                Login
+              </Link>
 
-          <div className="w-full sm:w-1/2 md:p-6 p-2 lg:w-3/12 text-center md:text-left mt-4 sm:mt-0">
-            <div className="h-full">
-              <h3 className="tracking-px mb-2 text-xs font-semibold uppercase text-gray-200">
-                Legals
-              </h3>
-              <ul className="space-y-1">
-                <li>
-                  <Link className="text-sm md:text-base font-medium text-gray-500 hover:text-blue-600" to="#">
-                    Terms &amp; Conditions
-                  </Link>
-                </li>
-                <li>
-                  <Link className="text-sm md:text-base font-medium text-gray-500 hover:text-blue-600" to="#">
-                    Privacy Policy
-                  </Link>
-                </li>
-                <li>
-                  <Link className="text-sm md:text-base font-medium text-gray-500 hover:text-blue-600" to="#">
-                    Licensing
-                  </Link>
-                </li>
-              </ul>
+              <Link
+                to="/signup"
+                className="text-sm text-white/70 hover:text-white"
+              >
+                Sign up
+              </Link>
             </div>
           </div>
         </div>
-      </div>
-    </section>
-  )
-}
 
-export default Footer
+        <div className="flex flex-col justify-between gap-3 pt-6 text-[10px] uppercase tracking-[0.15em] text-white/30 md:flex-row">
+          <p>© 2026 Blog's</p>
+          <p>Stories that stay with you.</p>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;

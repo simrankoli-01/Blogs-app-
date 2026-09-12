@@ -33,9 +33,7 @@ const EmailVerify = () => {
   }, [navigate, searchparams]);
 
   return;
-  <div className="flex items-center justify-center min-h-screen">
-    <h1 className="text-2xl font-semibold">{message}</h1>
-  </div>;
+ 
 };
 
 export default EmailVerify;

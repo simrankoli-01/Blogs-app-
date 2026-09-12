@@ -2,37 +2,69 @@ import React from "react";
 import appWriteService from "../appwrite/conf";
 import { Link } from "react-router-dom";
 
-const Cards = ({ $id, title, featureImg, profileImg, username }) => {
+const Cards = ({
+  $id,
+  title,
+  featureImg,
+  profileImg,
+  username,
+  index = 0,
+}) => {
   return (
-      <div className="w-full p-4 rounded-xl bg-white/20">
-        <Link to={`/post/${$id}`}>
-        <div className="w-full justify-center mb-4">
+    <article className="group">
+      <Link to={`/post/${$id}`}>
+        <div className="relative aspect-[4/3] overflow-hidden bg-[#ddd7cc]">
           <img
             src={appWriteService.getFileView(featureImg)}
             alt={title}
-            className="rounded-xl"
+            className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
           />
+
+          <div className="absolute inset-0 bg-black/0 transition group-hover:bg-black/10" />
+
+          <div className="absolute left-4 top-4">
+            <span className="bg-[#f5f2eb] px-3 py-1 text-[9px] uppercase tracking-[0.2em]">
+              0{index + 1}
+            </span>
+          </div>
         </div>
       </Link>
-        <Link to="/profile">
-          <div className="flex items-center mt-3">
+
+      <div className="pt-5">
+        <div className="flex items-center justify-between gap-3">
+          <Link
+            to="/profile"
+            className="flex items-center gap-2"
+          >
             <img
               src={
                 profileImg
                   ? appWriteService.getFileView(profileImg)
-                  : `https://ui-avatars.com/api/?name=${username}`
+                  : `https://ui-avatars.com/api/?name=${username}&background=f5f2eb&color=171717`
               }
-              className="w-10 h-10 object-cover rounded-full bg-white/20 "
+              alt={username}
+              className="h-7 w-7 rounded-full object-cover"
             />
 
-            <div className="ml-2">
-              <p className="text-xl text-white font-medium">{username}</p>
-            </div>
-          </div>
+            <span className="text-[10px] uppercase tracking-[0.15em] text-black/50">
+              {username}
+            </span>
+          </Link>
+
+          <span className="text-[10px] uppercase tracking-wider text-black/30">
+            Story
+          </span>
+        </div>
+
+        <Link to={`/post/${$id}`}>
+          <h2 className="mt-4 font-serif text-2xl leading-[1.05] text-black transition group-hover:italic md:text-3xl">
+            {title}
+          </h2>
         </Link>
-        <h2 className="text-sm mt-1 text-blue-200 font-mono">{title}</h2>
+
+        <div className="mt-5 h-px w-full bg-black/10" />
       </div>
-    
+    </article>
   );
 };
 

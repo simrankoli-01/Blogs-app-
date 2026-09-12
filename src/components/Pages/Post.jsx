@@ -1,70 +1,114 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import appwiteService from "../../appwrite/conf";
-import { Button, Container } from "../index";
+import Button from "../Button";
+import Container from "../container/Container";
 import parse from "html-react-parser";
 import { useSelector } from "react-redux";
 
 const Post = () => {
-  const [post, setPosts] = useState(null);
+  const [post, setPost] = useState(null);
   const { slug } = useParams();
   const navigate = useNavigate();
 
   const userData = useSelector((state) => state.auth.userData);
-  // console.log(slug)
 
-  const isAuthor = post && userData ? post.userId === userData.$id : false;
+  const isAuthor =
+    post && userData
+      ? post.userId === userData.$id
+      : false;
 
   useEffect(() => {
-    if (slug) {
-      appwiteService.getPost(slug).then((post) => {
-        if (post) setPosts(post);
-        else navigate("/");
-      });
-    } else {
+    if (!slug) {
       navigate("/");
+      return;
     }
+
+    appwiteService.getPost(slug).then((data) => {
+      if (data) {
+        setPost(data);
+      } else {
+        navigate("/");
+      }
+    });
   }, [slug, navigate]);
 
-  const deletePost = () => {
-    appwiteService.deletePost(post.$id);
+  const deletePost = async () => {
+    await appwiteService.deletePost(post.$id);
     navigate("/");
   };
-//   console.log("userData:", userData);
-// console.log("post.userId:", post?.userId);
 
-  return post ? (
-    <div className="md:py-6 py-1">
+  if (!post) {
+    return (
+      <div className="min-h-screen bg-[#f5f2eb] pt-20 text-center">
+        Loading...
+      </div>
+    );
+  }
+
+  return (
+    <main className="min-h-screen bg-[#f5f2eb] text-[#171717]">
       <Container>
-        <div className="flex flex-col mx-auto max-w-3xl relative bg-white/20 md:rounded-xl rounded-none md:px-6 px-2 py-5 z-0">
-           <div className="mx-auto">
-              <img
-            src={appwiteService.getFileView(post.featureImg)}
-            alt={post.title}
-            className=" w-100 max-h-50  object-cover rounded-xl"
-          />
-          </div>
-         <div className="w-full mt-2">
-      <div className="text-sm">{parse(post.content)}</div>
-    </div>
-        
-          {isAuthor && (
-            <div className="absolute md:top-5 top-6 md:right-6 right-4 z-10 text-white">
-              <Link to={`/edit-post/${post.$id}`}>
-                <Button bgcolor="cursor-pointer bg-green-500 hover:bg-green-700" className="md:mr-3 mr-1">
-                  Edit
+        <article className="mx-auto max-w-5xl pb-24 pt-10 md:pt-20">
+          
+          <div className="mb-8 flex items-center justify-between border-b border-black/10 pb-5">
+            <Link
+              to="/"
+              className="text-[10px] uppercase tracking-[0.2em] text-black/50 hover:text-black"
+            >
+              ← Back to stories
+            </Link>
+
+            {isAuthor && (
+              <div className="flex gap-2">
+                <Link to={`/edit-post/${post.$id}`}>
+                  <Button
+                    bgcolor="bg-transparent"
+                    textcolor="text-black"
+                    className="border border-black/20 text-[10px] uppercase tracking-wider hover:bg-black hover:text-white"
+                  >
+                    Edit
+                  </Button>
+                </Link>
+
+                <Button
+                  bgcolor="bg-black"
+                  className="text-[10px] uppercase tracking-wider"
+                  onClick={deletePost}
+                >
+                  Delete
                 </Button>
-              </Link>
-              <Button bgcolor="cursor-pointer bg-red-600 hover:bg-red-700" onClick={deletePost}>
-                Delete
-              </Button>
+              </div>
+            )}
+          </div>
+
+          <header className="max-w-4xl">
+            <p className="mb-5 text-[10px] uppercase tracking-[0.3em] text-black/40">
+              Journal · Story
+            </p>
+
+            <h1 className="font-serif text-5xl leading-[0.9] tracking-tight sm:text-6xl md:text-8xl">
+              {post.title}
+            </h1>
+          </header>
+
+          <div className="mt-12 aspect-[16/9] overflow-hidden bg-[#ddd7cc] md:mt-16">
+            <img
+              src={appwiteService.getFileView(post.featureImg)}
+              alt={post.title}
+              className="h-full w-full object-cover"
+            />
+          </div>
+
+          <div className="mx-auto mt-12 max-w-3xl">
+            <div className="prose prose-neutral max-w-none prose-headings:font-serif prose-p:leading-8 prose-p:text-black/70 prose-a:text-black">
+              {parse(post.content)}
             </div>
-          )}
-        </div>
-         
+          </div>
+        </article>
       </Container>
-    </div>
-  ) : null;
+    </main>
+  );
 };
 
 export default Post;

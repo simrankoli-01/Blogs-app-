@@ -1,149 +1,175 @@
+// PostForm.jsx
 import React, { useCallback, useEffect } from "react";
-import { Button, Input, Select, RTE } from "../index";
+import Button from "../Button";
+import Input from "../Input";
+import Select from "../Select";
+import RTE from "../RTE";
 import { useForm } from "react-hook-form";
 import service from "../../appwrite/conf";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const PostForm = ({ post }) => {
-  const { register, handleSubmit, getValues, setValue, watch, control } =
-    useForm({
-      defaultValues: {
-        title: post?.title || "",
-        slug: post?.slug || "",
-        content: post?.content || "",
-        status: post?.status || "active",
-      },
-    });
-
+  const navigate = useNavigate();
   const userData = useSelector((state) => state.auth.userData);
 
-  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    setValue,
+    watch,
+    control,
+  } = useForm({
+    defaultValues: {
+      title: post?.title || "",
+      slug: post?.slug || "",
+      content: post?.content || "",
+      status: post?.status || "active",
+    },
+  });
 
   const submit = async (data) => {
-    if (post) {
-      const file = data.image[0]
-        ? await service.uploadFile(data.image[0])
-        : null;
-      if (file) {
-        service.deleteFile(post.featureImg || post.featureImage);
-      }
+    try {
+      if (post) {
+        const file = data.image?.[0]
+          ? await service.uploadFile(data.image[0])
+          : null;
 
-      const dbPost = await service.updatePost(post.$id, {
-        ...data,
-        featuredImage: file ? file.$id : post.featureImg,
-      });
+        if (file) {
+          await service.deleteFile(
+            post.featuredImage || post.featureImg
+          );
+        }
 
-      if (dbPost) {
-        navigate(`/post/${dbPost.$id}`);
-      }
-    } else {
-      const file = await service.uploadFile(data.image[0]);
-      if (file) {
-        const fileId = file.$id;
-
-        const dbpost = await service.createPost({
+        const dbPost = await service.updatePost(post.$id, {
           title: data.title,
           slug: data.slug,
           content: data.content,
           status: data.status,
-          featuredImage: file.$id,
-          userId: userData.$id,
-          username: userData.name
+          featuredImage:
+            file?.$id ||
+            post.featuredImage ||
+            post.featureImg,
         });
 
-        if (dbpost) {
-          navigate(`/post/${dbpost.$id}`);
+        if (dbPost) {
+          navigate(`/post/${dbPost.$id}`);
+        }
+      } else {
+        if (!data.image?.[0]) return;
+
+        const file = await service.uploadFile(data.image[0]);
+
+        if (file) {
+          const dbPost = await service.createPost({
+            title: data.title,
+            slug: data.slug,
+            content: data.content,
+            status: data.status,
+            featuredImage: file.$id,
+            userId: userData.$id,
+            username: userData.name,
+          });
+
+          if (dbPost) {
+            navigate(`/post/${dbPost.$id}`);
+          }
         }
       }
+    } catch (error) {
+      console.error("Post submit error:", error);
     }
   };
 
   const slugTransform = useCallback((value) => {
-    if (value && typeof value === "string")
-      return value
-        .trim()
-        .toLowerCase()
-        .replace(/[^a-zA-Z\d]+/g, "-")
-        .replace(/\s/g, "-");
-    return "";
+    if (!value || typeof value !== "string") return "";
+
+    return value
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-zA-Z\d]+/g, "-")
+      .replace(/^-+|-+$/g, "");
   }, []);
 
   useEffect(() => {
     const subscription = watch((value, { name }) => {
       if (name === "title") {
-        setValue("slug", slugTransform(value.title), { shouldValidate: true });
+        setValue("slug", slugTransform(value.title), {
+          shouldValidate: true,
+        });
       }
     });
 
-    return () => {
-      subscription.unsubscribe();
-    };
+    return () => subscription.unsubscribe();
   }, [watch, setValue, slugTransform]);
+
+  const currentImage =
+    post?.featuredImage || post?.featureImg;
 
   return (
     <form
       onSubmit={handleSubmit(submit)}
-      className="flex flex-col sm:flex-wrap sm:flex-row"
+      className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_320px]"
     >
-      <div className="w-full sm:w-2/3 px-2">
+      <div className="space-y-7">
         <Input
-          label="Title :"
-          placeholder="Title"
-          className="mb-4"
+          label="Title"
+          placeholder="Write your story title..."
           {...register("title", { required: true })}
         />
+
         <Input
-          label="Slug :"
-          placeholder="Slug"
-          className="mb-4"
+          label="Slug"
+          placeholder="story-slug"
           {...register("slug", { required: true })}
           onInput={(e) => {
-            setValue("slug", slugTransform(e.currentTarget.value), {
-              shouldValidate: true,
-            });
+            setValue(
+              "slug",
+              slugTransform(e.currentTarget.value),
+              {
+                shouldValidate: true,
+              }
+            );
           }}
         />
+
         <RTE
-          label="Content :"
+          label="Content"
           name="content"
           control={control}
           defaultValue={getValues("content")}
         />
       </div>
-      <div className="w-full sm:w-1/3 px-2 mt-4 sm:mt-0">
+
+      <aside className="h-fit space-y-6 border-l border-black/10 pl-0 lg:pl-8">
         <Input
-          label="Featured Image:"
+          label="Featured image"
           type="file"
-          className="mb-4"
-          accept="image/png, image/jpg, image/jpeg, image/gif"
+          accept="image/png, image/jpg, image/jpeg, image/gif, image/webp"
           {...register("image", { required: !post })}
         />
-        {post && (
-          <div className="w-full mb-4">
+
+        {post && currentImage && (
+          <div className="overflow-hidden border border-black/10 bg-white">
             <img
-              src={post.featureImg ? service.getFileView(post.featureImg) : ""}
+              src={service.getFileView(currentImage)}
               alt={post.title}
-              className="rounded-lg w-full h-auto object-cover"
+              className="aspect-[4/3] w-full object-cover"
             />
           </div>
         )}
 
         <Select
-          options={["active", "inactive"]}
           label="Status"
-          className="mb-4 bg-white/20"
+          options={["active", "inactive"]}
           {...register("status", { required: true })}
         />
 
-        <Button
-          type="submit"
-          bgcolor={post ? "bg-green-500" : undefined}
-          className="w-full"
-        >
-          {post ? "update" : "submit"}
+        <Button type="submit" className="w-full">
+          {post ? "Update story" : "Publish story"}
         </Button>
-      </div>
+      </aside>
     </form>
   );
 };

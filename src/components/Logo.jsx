@@ -1,13 +1,11 @@
 import React from "react";
-// import { RiQuillPenAiFill } from "react-icons/ri";
 
-function Logo({ width = "100px" }) {
+function Logo() {
   return (
-    <div className="flex items-center justify-center text-white">
-      {/* <span>
-        <RiQuillPenAiFill className="md:text-3xl text-2xl"/>
-      </span> */}
-      <h2 className="md:text-3xl text-2xl  mt-2 logo-font">Blog's</h2>
+    <div className="flex items-center text-black">
+      <h2 className="font-serif text-2xl font-semibold tracking-tight">
+        Blog's
+      </h2>
     </div>
   );
 }

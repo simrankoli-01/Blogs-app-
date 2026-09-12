@@ -18,51 +18,58 @@ const Profile = () => {
   }, [userData]);
 
   if (!profile) {
-    return <h1 className="text-center mt-10">Loading...</h1>;
+    return (
+      <div className="min-h-screen bg-[#f5f2eb] pt-20 text-center text-black">
+        Loading...
+      </div>
+    );
   }
 
   return (
-    <div className="px-4 py-6 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto bg-white/10 backdrop-blur-lg rounded-2xl overflow-hidden border border-white/20 shadow-xl">
-        {/* Cover */}
-        <div className="h-16  md:h-30 bg-linear-to-r from-pink-500 via-purple-500 to-blue-500" />
+    <main className="min-h-screen bg-[#f5f2eb] text-black">
+      <div className="mx-auto max-w-4xl px-5 py-12 md:px-8 md:py-20">
+        
+        <div className="border-y border-black/10 py-10 md:py-16">
+          <div className="flex flex-col items-start gap-8 md:flex-row md:items-center">
+            
+            <img
+              src={
+                profile.profileImg
+                  ? service.getFileView(profile.profileImg)
+                  : `https://ui-avatars.com/api/?name=${profile.name}&background=171717&color=f5f2eb`
+              }
+              alt={profile.name}
+              className="h-28 w-28 rounded-full object-cover md:h-40 md:w-40"
+            />
 
-        {/* Profile Section */}
-        <div className="flex flex-col items-center px-6 pb-8 -mt-10 md:-mt-20">
-          <img
-            src={
-              profile.profileImg
-                ? service.getFileView(profile.profileImg)
-                : `https://ui-avatars.com/api/?name=${profile.name}&background=random`
-            }
-            alt={profile.name}
-            className="w-16 h-16 md:w-40 md:h-40 rounded-full md:border-4 border-2 border-white object-cover shadow-lg"
-          />
+            <div>
+              <p className="mb-3 text-[10px] uppercase tracking-[0.3em] text-black/40">
+                Writer
+              </p>
 
-          {/* Name */}
-          <h1 className="mt-4 text-2xl sm:text-3xl font-bold text-center">
-            {profile.name}
-          </h1>
+              <h1 className="font-serif text-5xl leading-none md:text-7xl">
+                {profile.name}
+              </h1>
 
-          {/* Bio */}
-          <p className="mt-3 text-center text-gray-300 max-w-xl text-sm sm:text-base">
-            {profile.bio || "No bio added yet."}
-          </p>
+              <p className="mt-5 max-w-xl text-sm leading-6 text-black/60">
+                {profile.bio || "No bio added yet."}
+              </p>
 
-          {/* Email */}
-          <p className="mt-4 text-center break-all text-sm sm:text-base">
-            {profile.email}
-          </p>
+              <p className="mt-4 text-xs text-black/40">
+                {profile.email}
+              </p>
 
-          {/* Edit Button */}
-          <Link to="/edit-profile" className="mt-6 w-full sm:w-auto">
-            <button className="w-full sm:w-auto px-8 py-3 rounded-full bg-pink-500 hover:bg-pink-600 transition font-medium">
-              Edit Profile
-            </button>
-          </Link>
+              <Link
+                to="/edit-profile"
+                className="mt-6 inline-block rounded-full bg-black px-6 py-3 text-[10px] uppercase tracking-[0.2em] text-white"
+              >
+                Edit profile
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 

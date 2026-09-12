@@ -1,29 +1,38 @@
+// Login.jsx
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { login as loginaction } from "../features/authSlice";
-import { Button, Input, Logo } from "./index";
-import authservice from "../appwrite/Auth";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
+import Button from "./Button";
+import Input from "./Input";
+import Logo from "./Logo";
+import { login as loginAction } from "../features/authSlice";
+import authservice from "../appwrite/Auth";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [error, setError] = useState("");
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [error, setError] = useState("");
 
   const onSubmit = async (data) => {
-    // console.log("onSubmit fired with: ", data)
     setError("");
+
     try {
       const session = await authservice.login(data);
+
       if (session) {
         const userData = await authservice.isLogedin();
-        if (userData) dispatch(loginaction(userData));
+
+        if (userData) {
+          dispatch(loginAction(userData));
+        }
+
         navigate("/");
       }
     } catch (error) {
@@ -31,64 +40,81 @@ const Login = () => {
     }
   };
 
-  // console.log("RHF error: ", errors)
   return (
-    <div className="flex items-center justify-center w-full py-10 text-white">
-      <div className={`mx-auto w-full max-w-lg  rounded-2xl p-5  bg-white/20`}>
-        <div className="flex justify-center">
-          <span className="inline-block w-full max-w-[5vw]">
-            <Logo width="100%" />
-          </span>
+    <div className="min-h-[80vh] bg-[#f5f2eb] px-4 py-16 text-[#171717] sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-md">
+        <div className="mb-10 text-center">
+          <div className="mb-8 flex justify-center">
+            <Logo width="90px" />
+          </div>
+
+          <p className="mb-3 text-xs uppercase tracking-[0.2em] text-black/40">
+            Welcome back
+          </p>
+
+          <h1 className="font-serif text-4xl font-normal sm:text-5xl">
+            Sign in
+          </h1>
+
+          <p className="mt-4 text-sm text-black/50">
+            Don't have an account?{" "}
+            <Link
+              to="/signup"
+              className="font-medium text-black underline underline-offset-4"
+            >
+              Sign up
+            </Link>
+          </p>
         </div>
-        <h2 className="text-center text-2xl font-bold leading-tight">
-          Sign in to your acount
-        </h2>
-        <p className="mt-2 text-center text-base text-black/60">
-          Don&apos;t have any account?&nbsp;
-          <Link
-            to="/signup"
-            className="font-medium text-blue-900 transition-all duration-200 hover:underline"
-          >
-            Sign Up
-          </Link>
-        </p>
-        {error && <p className="text-red-500 mt-8 text-center">{error}</p>}
-        <form onSubmit={handleSubmit(onSubmit)} className="mt-8">
-          <div className="space-y-4">
+
+        {error && (
+          <div className="mb-6 border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
+            {error}
+          </div>
+        )}
+
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="border-t border-black/10 pt-8"
+        >
+          <div className="space-y-6">
             <Input
-              label="Email: "
-              placeholder="Enter your email"
+              label="Email"
               type="email"
+              placeholder="you@example.com"
               {...register("email", {
                 required: true,
                 validate: {
                   matchPattern: (value) =>
                     /^([\w\.\-_]+)?\w+@[\w-_]+(\.\w+){1,}$/.test(value) ||
-                    "Email address must be a valid address",
+                    "Please enter a valid email address",
                 },
               })}
             />
-            <Input
-              label="Password: "
-              placeholder="Enter your password"
-              type="password"
-              {...register("password", {
-                required: true,
-                minLength: {
-                  value: 9,
-                  message: "Password must be atleast 9 characters",
-                },
-              })}
-            />
-            {errors.password && (
-              <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
-            )}
-            <Button
-              onClick={(e) => console.log("button clicked")}
-              className="w-full text-white hover:bg-violet-800"
-              type="submit"
-            >
-              Login
+
+            <div>
+              <Input
+                label="Password"
+                type="password"
+                placeholder="Your password"
+                {...register("password", {
+                  required: true,
+                  minLength: {
+                    value: 9,
+                    message: "Password must be at least 9 characters",
+                  },
+                })}
+              />
+
+              {errors.password && (
+                <p className="mt-2 text-xs text-red-500">
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
+
+            <Button type="submit" className="w-full">
+              Sign In
             </Button>
           </div>
         </form>

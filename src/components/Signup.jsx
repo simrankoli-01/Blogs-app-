@@ -1,19 +1,20 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { Button, Input, Logo } from "./index";
-import { login } from "../features/authSlice";
-import authservice from "../appwrite/Auth";
 import { useForm } from "react-hook-form";
+import Button from "./Button";
+import Input from "./Input";
+import Logo from "./Logo";
+import authservice from "../appwrite/Auth";
 
 const Signup = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [error, setError] = useState("");
+
   const { register, handleSubmit } = useForm();
 
   const signup = async (data) => {
     setError("");
+
     try {
       const user = await authservice.createAccount(data);
 
@@ -26,58 +27,80 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex items-center justify-center py-10 text-white">
-      <div className={`mx-auto w-full max-w-lg bg-white/10 rounded-xl p-5 `}>
-        <div className="mb-2 flex justify-center">
-          <span className="inline-block w-full max-w-[100]">
-            <Logo width="100%" />
-          </span>
+    <div className="min-h-[80vh] bg-[#f5f2eb] px-4 py-16 text-[#171717] sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-md">
+        <div className="mb-10 text-center">
+          <div className="mb-8 flex justify-center">
+            <Logo width="90px" />
+          </div>
+
+          <p className="mb-3 text-xs uppercase tracking-[0.2em] text-black/40">
+            Join the journal
+          </p>
+
+          <h1 className="font-serif text-4xl font-normal sm:text-5xl">
+            Create account
+          </h1>
+
+          <p className="mt-4 text-sm text-black/50">
+            Already have an account?{" "}
+            <Link
+              to="/login"
+              className="font-medium text-black underline underline-offset-4"
+            >
+              Sign in
+            </Link>
+          </p>
         </div>
-        <h2 className="text-center text-2xl font-bold leading-tight">
-          Sign up to create acount
-        </h2>
-        <p className="mt-2 text-center text-base text-black/60">
-          Already have an account?
-          <Link
-            to="/login"
-            className="font-medium text-primary transition-all duration-200 hover:underline"
-          >
-            Sign In
-          </Link>
-        </p>
-        {error && <p className="text-red-500 mt-8 text-center">{error}</p>}
-        <form onSubmit={handleSubmit(signup)}>
-          <div className="space-y-5">
+
+        {error && (
+          <div className="mb-6 border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
+            {error}
+          </div>
+        )}
+
+        <form
+          onSubmit={handleSubmit(signup)}
+          className="border-t border-black/10 pt-8"
+        >
+          <div className="space-y-6">
             <Input
-              label="Name: "
+              label="Name"
               type="text"
-              placeholder="Enter your name"
+              placeholder="Your name"
               {...register("name", {
                 required: true,
               })}
             />
+
             <Input
-              label="Email: "
-              placeholder="Enter your email"
+              label="Email"
               type="email"
+              placeholder="you@example.com"
               {...register("email", {
                 required: true,
                 validate: {
                   matchPattern: (value) =>
                     /^([\w\.\-_]+)?\w+@[\w-_]+(\.\w+){1,}$/.test(value) ||
-                    "Email address must be a valid address",
+                    "Please enter a valid email address",
                 },
               })}
             />
+
             <Input
-              label="Password: "
+              label="Password"
               type="password"
-              placeholder="Enter your password"
+              placeholder="Create a password"
               {...register("password", {
                 required: true,
+                minLength: {
+                  value: 9,
+                  message: "Password must be at least 9 characters",
+                },
               })}
             />
-            <Button type="submit" className="w-full text-white">
+
+            <Button type="submit" className="w-full">
               Create Account
             </Button>
           </div>

@@ -5,7 +5,6 @@ import { login, logout } from "./features/authSlice";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import { Outlet, useLocation } from "react-router-dom";
-import Video from "./components/Video";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -25,26 +24,28 @@ function App() {
         }
       })
       .finally(() => setLoading(false));
-  }, []);
+  }, [dispatch]);
 
-  return !loading ? (
-    <div className="relative flex  flex-col min-h-screen">
-      {isHome ? (
-        <div className="fixed inset-0 -z-10">
-          <Video />
-        </div>
-      ) : (
-        <div className="fixed inset-0 -z-10 bg-linear-to-br from-[#1d187e] via-[#6720a9] to-[#54082e]" />
-      )}
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#f5f2eb] text-[#171717]">
+        <p className="text-xs uppercase tracking-[0.2em] text-black/40">
+          Loading...
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative flex min-h-screen flex-col bg-[#f5f2eb] text-[#171717]">
       <Header />
+
       <main className="flex-1">
         <Outlet />
       </main>
 
       <Footer />
     </div>
-  ) : (
-    <div className='text-center text-2xl mt-20'>Loading.....</div>
   );
 }
 
