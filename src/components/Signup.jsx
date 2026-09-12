@@ -27,26 +27,26 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-[80vh] bg-[#f5f2eb] px-4 py-16 text-[#171717] sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-md">
-        <div className="mb-10 text-center">
-          <div className="mb-8 flex justify-center">
+    <div className="min-h-[80vh] px-4  md:py-2 text-white sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-lg bg-white/20 backdrop-blur-lg rounded-2xl px-4 py-2">
+        <div className="mb-6 text-center">
+          <div className="mb-2 flex justify-center">
             <Logo width="90px" />
           </div>
 
-          <p className="mb-3 text-xs uppercase tracking-[0.2em] text-black/40">
+          <p className="mb-1 text-xs uppercase tracking-[0.2em] text-white/40">
             Join the journal
           </p>
 
-          <h1 className="font-serif text-4xl font-normal sm:text-5xl">
+          <h1 className="font-serif text-white text-4xl font-normal sm:text-5xl">
             Create account
           </h1>
 
-          <p className="mt-4 text-sm text-black/50">
+          <p className="mt-2 text-sm text-white/50">
             Already have an account?{" "}
             <Link
               to="/login"
-              className="font-medium text-black underline underline-offset-4"
+              className="font-medium text-white underline underline-offset-4"
             >
               Sign in
             </Link>
@@ -61,9 +61,9 @@ const Signup = () => {
 
         <form
           onSubmit={handleSubmit(signup)}
-          className="border-t border-black/10 pt-8"
+          className="pt-8"
         >
-          <div className="space-y-6">
+          <div className="space-y-4">
             <Input
               label="Name"
               type="text"
@@ -100,7 +100,7 @@ const Signup = () => {
               })}
             />
 
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full rounded-2xl bg-white text-black">
               Create Account
             </Button>
           </div>

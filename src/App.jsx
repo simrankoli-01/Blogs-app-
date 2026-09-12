@@ -28,8 +28,8 @@ function App() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#e0dfda] text-[#171717]">
-        <p className="text-xs uppercase tracking-[0.2em] text-black/40">
+      <div className="flex min-h-screen items-center justify-center bg-black text-white">
+        <p className="sm:text-sm md:text-7xl lg:text-9xl uppercase tracking-[0.2em] text-white/40">
           Loading...
         </p>
       </div>
@@ -37,7 +37,7 @@ function App() {
   }
 
   return (
-    <div className="relative flex min-h-screen flex-col bg-[#d1d0cd] text-[#171717]">
+    <div className="relative flex min-h-screen flex-col bg-black text-white">
       <Header />
 
       <main className="flex-1">

@@ -40,21 +40,21 @@ const Post = () => {
 
   if (!post) {
     return (
-      <div className="min-h-screen bg-[#f5f2eb] pt-20 text-center">
+      <div className="min-h-screen bg-black pt-20 text-center">
         Loading...
       </div>
     );
   }
 
   return (
-    <main className="min-h-screen bg-[#f5f2eb] text-[#171717]">
+    <main className="min-h-screen bg-black text-white">
       <Container>
         <article className="mx-auto max-w-5xl pb-24 pt-10 md:pt-20">
           
-          <div className="mb-8 flex items-center justify-between border-b border-black/10 pb-5">
+          <div className="mb-8 flex items-center justify-between border-b border-white/10 pb-5">
             <Link
               to="/"
-              className="text-[10px] uppercase tracking-[0.2em] text-black/50 hover:text-black"
+              className="text-[10px] uppercase tracking-[0.2em] text-white/50 hover:text-white"
             >
               ← Back to stories
             </Link>
@@ -65,14 +65,14 @@ const Post = () => {
                   <Button
                     bgcolor="bg-transparent"
                     textcolor="text-black"
-                    className="border border-black/20 text-[10px] uppercase tracking-wider hover:bg-black hover:text-white"
+                    className="border border-white/20 text-[10px] uppercase tracking-wider hover:bg-white hover:text-black"
                   >
                     Edit
                   </Button>
                 </Link>
 
                 <Button
-                  bgcolor="bg-black"
+                  bgcolor="bg-white text-black"
                   className="text-[10px] uppercase tracking-wider"
                   onClick={deletePost}
                 >
@@ -83,7 +83,7 @@ const Post = () => {
           </div>
 
           <header className="max-w-4xl">
-            <p className="mb-5 text-[10px] uppercase tracking-[0.3em] text-black/40">
+            <p className="mb-5 text-[10px] uppercase tracking-[0.3em] text-white/40">
               Journal · Story
             </p>
 
@@ -92,7 +92,7 @@ const Post = () => {
             </h1>
           </header>
 
-          <div className="mt-12 aspect-[16/9] overflow-hidden bg-[#ddd7cc] md:mt-16">
+          <div className="mt-12 aspect-[16/9] overflow-hidden bg-black md:mt-16">
             <img
               src={appwiteService.getFileView(post.featureImg)}
               alt={post.title}

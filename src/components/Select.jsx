@@ -12,7 +12,7 @@ const Select = React.forwardRef(function Select(
       {label && (
         <label
           htmlFor={id}
-          className="mb-2 block font-sans text-xs font-medium uppercase tracking-[0.18em] text-black/60"
+          className="mb-2 block font-sans text-xs font-medium uppercase tracking-[0.18em] text-white/60"
         >
           {label}
         </label>
@@ -22,7 +22,7 @@ const Select = React.forwardRef(function Select(
         {...props}
         ref={ref}
         id={id}
-        className={`w-full border border-black/10 bg-white px-4 py-3 text-sm text-black outline-none transition focus:border-black ${className}`}
+        className={`w-full border border-white/10 bg-black px-4 py-3 text-sm text-white outline-none transition focus:border-white ${className}`}
       >
         {options.map((option) => (
           <option value={option} key={option}>

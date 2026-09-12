@@ -13,7 +13,7 @@ const Cards = ({
   return (
     <article className="group">
       <Link to={`/post/${$id}`}>
-        <div className="relative aspect-[4/3] overflow-hidden bg-[#ddd7cc]">
+        <div className="relative aspect-[4/3] overflow-hidden bg-white">
           <img
             src={appWriteService.getFileView(featureImg)}
             alt={title}
@@ -23,7 +23,7 @@ const Cards = ({
           <div className="absolute inset-0 bg-black/0 transition group-hover:bg-black/10" />
 
           <div className="absolute left-4 top-4">
-            <span className="bg-[#f5f2eb] px-3 py-1 text-[9px] uppercase tracking-[0.2em]">
+            <span className="text-white px-3 py-1 text-[20px] uppercase tracking-[0.2em]">
               0{index + 1}
             </span>
           </div>
@@ -46,23 +46,23 @@ const Cards = ({
               className="h-7 w-7 rounded-full object-cover"
             />
 
-            <span className="text-[10px] uppercase tracking-[0.15em] text-black/50">
+            <span className="text-[10px] uppercase tracking-[0.15em] text-white/50">
               {username}
             </span>
           </Link>
 
-          <span className="text-[10px] uppercase tracking-wider text-black/30">
+          <span className="text-[10px] uppercase tracking-wider text-white/30">
             Story
           </span>
         </div>
 
         <Link to={`/post/${$id}`}>
-          <h2 className="mt-4 font-serif text-2xl leading-[1.05] text-black transition group-hover:italic md:text-3xl">
+          <h2 className="mt-4 font-serif text-2xl leading-[1.05] text-white transition group-hover:italic md:text-3xl">
             {title}
           </h2>
         </Link>
 
-        <div className="mt-5 h-px w-full bg-black/10" />
+        <div className="mt-5 h-px w-full bg-white/10" />
       </div>
     </article>
   );

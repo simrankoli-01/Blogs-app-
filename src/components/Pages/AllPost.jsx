@@ -40,11 +40,11 @@ const AllPost = () => {
   }, []);
 
   return (
-    <main className="min-h-screen bg-[#f5f2eb] text-black">
+    <main className="min-h-screen bg-black text-white">
       <Container>
         <section className="pb-20 pt-12 md:pt-20">
-          <div className="mb-14 border-b border-black/10 pb-8">
-            <p className="mb-4 text-[10px] uppercase tracking-[0.3em] text-black/40">
+          <div className="mb-14 border-b border-white/10 pb-8">
+            <p className="mb-4 text-[10px] uppercase tracking-[0.3em] text-white/40">
               Discover
             </p>
 

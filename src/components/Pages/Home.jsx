@@ -53,15 +53,15 @@ const Home = () => {
   );
 
   return (
-    <main className="min-h-screen bg-[#f5f2eb] text-[#171717]">
+    <main className="min-h-screen bg-black text-white">
       <Container>
         {!hasUserPost && posts.length > 0 && (
-          <div className="border-b border-black/10 py-4">
-            <p className="text-center text-xs uppercase tracking-[0.15em] text-black/60">
+          <div className="border-b border-white/10 py-4">
+            <p className="text-center text-xs uppercase tracking-[0.15em] text-white/60">
               You haven't shared anything yet.{" "}
               <Link
                 to="/add-post"
-                className="font-semibold text-black underline underline-offset-4"
+                className="font-semibold text-white underline underline-offset-4"
               >
                 Create your first post
               </Link>
@@ -69,10 +69,10 @@ const Home = () => {
           </div>
         )}
 
-        <section className="pb-20 pt-12 md:pt-20">
+        <section className="pb-20 pt-12 md:pt-10">
           <div className="mb-14 flex flex-col justify-between gap-5 md:flex-row md:items-end">
             <div>
-              <p className="mb-4 text-[10px] uppercase tracking-[0.3em] text-black/50">
+              <p className="mb-4 text-[10px] uppercase tracking-[0.3em] text-white/50">
                 The Journal
               </p>
 
@@ -83,14 +83,14 @@ const Home = () => {
               </h1>
             </div>
 
-            <p className="max-w-xs text-sm leading-6 text-black/60">
+            <p className="max-w-xs text-sm leading-6 text-white/60">
               A collection of thoughts, ideas and stories shared by our
               community of writers.
             </p>
           </div>
 
           {posts.length === 0 ? (
-            <div className="border-y border-black/10 py-20 text-center">
+            <div className="border-y border-white/10 py-20 text-center">
               <p className="font-serif text-3xl">
                 No stories yet.
               </p>

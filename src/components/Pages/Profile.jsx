@@ -19,17 +19,17 @@ const Profile = () => {
 
   if (!profile) {
     return (
-      <div className="min-h-screen bg-[#f5f2eb] pt-20 text-center text-black">
+      <div className="min-h-screen bg-black pt-20 text-center text-white">
         Loading...
       </div>
     );
   }
 
   return (
-    <main className="min-h-screen bg-[#f5f2eb] text-black">
+    <main className="min-h-screen bg-black text-white">
       <div className="mx-auto max-w-4xl px-5 py-12 md:px-8 md:py-20">
         
-        <div className="border-y border-black/10 py-10 md:py-16">
+        <div className="border-y border-white/10 py-10 md:py-16">
           <div className="flex flex-col items-start gap-8 md:flex-row md:items-center">
             
             <img
@@ -43,7 +43,7 @@ const Profile = () => {
             />
 
             <div>
-              <p className="mb-3 text-[10px] uppercase tracking-[0.3em] text-black/40">
+              <p className="mb-3 text-[10px] uppercase tracking-[0.3em] text-white/40">
                 Writer
               </p>
 
@@ -51,17 +51,17 @@ const Profile = () => {
                 {profile.name}
               </h1>
 
-              <p className="mt-5 max-w-xl text-sm leading-6 text-black/60">
+              <p className="mt-5 max-w-xl text-sm leading-6 text-white/60">
                 {profile.bio || "No bio added yet."}
               </p>
 
-              <p className="mt-4 text-xs text-black/40">
+              <p className="mt-4 text-xs text-white/40">
                 {profile.email}
               </p>
 
               <Link
                 to="/edit-profile"
-                className="mt-6 inline-block rounded-full bg-black px-6 py-3 text-[10px] uppercase tracking-[0.2em] text-white"
+                className="mt-6 inline-block rounded-full bg-white px-6 py-3 text-[10px] uppercase tracking-[0.2em] text-black"
               >
                 Edit profile
               </Link>

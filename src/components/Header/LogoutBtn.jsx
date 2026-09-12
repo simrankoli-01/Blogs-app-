@@ -18,7 +18,7 @@ function LogoutBtn() {
   return (
     <button
       onClick={logoutHandler}
-      className="text-[12px] uppercase tracking-[0.18em] text-black/70 transition hover:text-black"
+      className="text-[12px] uppercase tracking-[0.18em] text-white/70 transition hover:text-white"
     >
       Logout
     </button>

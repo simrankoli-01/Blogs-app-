@@ -25,8 +25,8 @@ export default function Protector({
 
   if (loader) {
     return (
-      <div className="flex min-h-[50vh] items-center justify-center bg-[#f5f2eb]">
-        <p className="text-xs uppercase tracking-[0.2em] text-black/40">
+      <div className="flex min-h-[50vh] items-center justify-center bg-black">
+        <p className="md:text-6xl sm:text-sm lg:text-9xl uppercase tracking-[0.2em] text-white/40">
           Loading...
         </p>
       </div>

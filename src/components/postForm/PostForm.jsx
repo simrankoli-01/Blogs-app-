@@ -142,7 +142,7 @@ const PostForm = ({ post }) => {
         />
       </div>
 
-      <aside className="h-fit space-y-6 border-l border-black/10 pl-0 lg:pl-8">
+      <aside className="h-fit space-y-6 border-l border-white/10 pl-0 lg:pl-8">
         <Input
           label="Featured image"
           type="file"
@@ -151,7 +151,7 @@ const PostForm = ({ post }) => {
         />
 
         {post && currentImage && (
-          <div className="overflow-hidden border border-black/10 bg-white">
+          <div className="overflow-hidden border border-white/10 bg-black">
             <img
               src={service.getFileView(currentImage)}
               alt={post.title}

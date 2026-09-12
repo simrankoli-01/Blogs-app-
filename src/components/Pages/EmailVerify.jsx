@@ -33,7 +33,6 @@ const EmailVerify = () => {
   }, [navigate, searchparams]);
 
   return;
- 
 };
 
 export default EmailVerify;

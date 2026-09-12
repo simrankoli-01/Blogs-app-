@@ -41,14 +41,14 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-[80vh] bg-[#f5f2eb] px-4 py-16 text-[#171717] sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-md">
+    <div className="min-h-[80vh] px-4 py-4 text-white sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-lg bg-white/20 py-4 rounded-2xl backdrop-blur-md px-10">
         <div className="mb-10 text-center">
           <div className="mb-8 flex justify-center">
             <Logo width="90px" />
           </div>
 
-          <p className="mb-3 text-xs uppercase tracking-[0.2em] text-black/40">
+          <p className="mb-3 text-xs uppercase tracking-[0.2em] text-white/40">
             Welcome back
           </p>
 
@@ -56,11 +56,11 @@ const Login = () => {
             Sign in
           </h1>
 
-          <p className="mt-4 text-sm text-black/50">
+          <p className="mt-4 text-sm text-white/50">
             Don't have an account?{" "}
             <Link
               to="/signup"
-              className="font-medium text-black underline underline-offset-4"
+              className="font-medium text-white underline underline-offset-4"
             >
               Sign up
             </Link>

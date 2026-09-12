@@ -17,7 +17,7 @@ const RTE = ({ name, control, label, defaultValue = "" }) => {
         control={control}
         defaultValue={defaultValue}
         render={({ field: { onChange, value } }) => (
-          <div className="w-full overflow-hidden border border-black/10 bg-white">
+          <div className="w-full overflow-hidden border border-white/10 bg-black">
             <Editor
               apiKey={import.meta.env.VITE_TINYMCE_API_KEY}
               value={value || ""}

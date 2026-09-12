@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { Logo, LogoutBtn, Container } from "../index";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import Logo from "../Logo";
+import LogoutBtn from "./LogoutBtn";
+import Container from "../container/Container";
 import { HiBars3 } from "react-icons/hi2";
 import { IoClose } from "react-icons/io5";
 
@@ -20,11 +22,11 @@ const Header = () => {
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-[#f5f2eb]/95 backdrop-blur-md">
+      <header className="sticky top-0 z-50 bg-black/20 backdrop-blur-md">
         <Container>
-          <nav className="flex h-20 items-center justify-between border-b border-black/10">
+          <nav className="flex py-3 items-center justify-between border-b border-white/10">
             
-            <Link to="/" className="text-black">
+            <Link to="/" className="text-white">
               <Logo />
             </Link>
 
@@ -35,7 +37,7 @@ const Header = () => {
                     <Link
                       key={item.name}
                       to={item.slug}
-                      className="text-[12px] uppercase tracking-[0.18em] text-black/70 transition hover:text-black"
+                      className="text-[12px] uppercase tracking-[0.18em] text-white/70 transition hover:text-white"
                     >
                       {item.name}
                     </Link>
@@ -49,7 +51,7 @@ const Header = () => {
               {!authStatus && (
                 <Link
                   to="/signup"
-                  className="rounded-full bg-black px-5 py-2 text-xs uppercase tracking-wider text-white"
+                  className="rounded-full bg-white px-5 py-2 text-xs uppercase tracking-wider text-black"
                 >
                   Join
                 </Link>
@@ -57,7 +59,7 @@ const Header = () => {
 
               <button
                 onClick={() => setMenuOpen(true)}
-                className="text-2xl text-black"
+                className="text-2xl text-white"
               >
                 <HiBars3 />
               </button>
@@ -74,11 +76,11 @@ const Header = () => {
       />
 
       <aside
-        className={`fixed right-0 top-0 z-50 h-full w-[85%] max-w-sm bg-[#f5f2eb] text-black transition-transform duration-500 ${
+        className={`fixed right-0 top-0 z-50 h-full w-[85%] max-w-sm bg-black text-white transition-transform duration-500 ${
           menuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="flex items-center justify-between border-b border-black/10 p-6">
+        <div className="flex items-center justify-between border-b border-white/10 p-6">
           <Logo />
 
           <button
@@ -97,7 +99,7 @@ const Header = () => {
                   key={item.name}
                   to={item.slug}
                   onClick={() => setMenuOpen(false)}
-                  className="border-b border-black/10 py-5 text-sm uppercase tracking-[0.15em]"
+                  className="border-b border-white/10 py-5 text-sm uppercase tracking-[0.15em]"
                 >
                   {item.name}
                 </Link>
